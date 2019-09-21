@@ -49,6 +49,42 @@ class NeuralNetwork {
         this.last_result = null;
 
         this.learning_rate = 0.1;
+
+        this.accuracy = [];
+    }
+
+    test(from = 0, to = 10) {
+        wrong_digits = [];
+        let all_correct = 0;
+        for (let i = from; i < to; i++) {
+            let correct = 0;
+            for (let j = 0; j < test_data[i].length; j++) {
+                let output = nn.feed_forward(test_data[i][j]);
+                let maxx = 0;
+                let max_index = -1;
+                for (let k = 0; k < output.length; k++) {
+                    if (output[k] > maxx) {
+                        maxx = output[k];
+                        max_index = k;
+                    }
+                }
+                if (max_index == i) {
+                    correct++;
+                } else {
+                    wrong_digits.push({
+                        digit: test_data[i][j],
+                        value: i,
+                        prediction: max_index,
+                        output: output
+                    });
+                }
+            }
+            all_correct += correct;
+            this.accuracy[i] = floor(correct / test_data[i].length * 1000) / 1000;
+        }
+        this.accuracy.total = all_correct / test_digits_count;
+        this.accuracy.wrong_count = wrong_digits.length;
+        console.log(this.accuracy);
     }
 
     feed_forward(inputs_array) {
@@ -81,7 +117,6 @@ class NeuralNetwork {
             let layer = this.layers[i];
 
             if (i === this.layers.length - 1) {
-                // if last layer
                 layer.error = targets.sub(outputs);
                 layer.delta = layer.error.mult(outputs).each(d_sigmoid);
             } else {
@@ -136,38 +171,58 @@ NeuralNetwork.prototype.prepare_draw = function () {
 }
 
 NeuralNetwork.prototype.draw = function () {
-    lineWidth(2);
+    background(rgb(50, 50, 50));
+
     for (let l = 0; l < this.layers.length; l++) {
         let weights = this.layers[l].weights;
         for (let i = 0; i < this.neurons[l].length; i++) {
             let a = this.neurons[l][i];
             for (let j = 0; j < this.neurons[l + 1].length; j++) {
-
                 let b = this.neurons[l + 1][j];
+                if (true || distSq(mouseX, mouseY, a.x, a.y) <= neron_radius_sq || distSq(mouseX, mouseY, b.x, b.y) <= neron_radius_sq) {
 
-                let val = weights.data[j][i];
+                    let weight = weights.data[j][i];
 
-                minw = min(val, minw);
-                maxw = max(val, maxw);
+                    minw = min(weight, minw);
+                    maxw = max(weight, maxw);
 
-                let alpha = 0;
-                if (val > 0) {
-                    alpha = map(val, 0, maxw, 0, 1);
-                } else if (val < 0) {
-                    alpha = map(val, 0, minw, 0, 1);
+                    let red = 0;
+                    let green = 128;
+                    let blue = 0;
+
+                    let alpha = 0;
+                    if (weight > 0) {
+                        alpha = map(weight, 0, maxw, 0, 1);
+                        blue = map(weight, 0, maxw, 0, 255);
+                    } else if (weight < 0) {
+                        alpha = map(weight, 0, minw, 0, 1);
+                        red = map(weight, 0, minw, 0, 255);
+                    }
+
+                    // red = map(weight,minw,maxw,255,0);
+                    // blue = map(weight,minw,maxw,0,255);
+
+                    lineWidth(1 + alpha * 2);
+                    stroke(rgba(red, green, blue, pow(alpha, 2)));
+                    line(a.x, a.y, b.x, b.y);
                 }
-
-                stroke(rgba(255 - (val * 255), 128, val * 255, pow(alpha, 2)));
-                line(a.x, a.y, b.x, b.y);
             }
         }
     }
 
-    fill(rgba(0, 0, 0, 1));
+    fill(rgba(33, 33, 33, 1));
     for (let i = 0; i < this.neurons.length; i++) {
         for (let j = 0; j < this.neurons[i].length; j++) {
             let n = this.neurons[i][j];
-            ellipse(n.x, n.y, 8, 8);
+            ellipse(n.x, n.y, neron_radius, neron_radius);
         }
     }
+}
+
+function train(n) {
+    for (let i = 0; i < n; i++) {
+        let index = floor(random(0, 10));
+        nn.backpropagation(data[index].random(), target[index]);
+    }
+    digits_seen += n;
 }
