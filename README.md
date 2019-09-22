@@ -18,11 +18,13 @@ let nn  =  new  NeuralNetwork(784, [40, 40], 10);
 ## Visualisation of the NN learning
 <!-- https://media.giphy.com/media/gKZwncNW8wahE14z63/giphy.gif -->
 ![](images/net.gif)
+
 Visualisation of the net learning and weights being constantly altered, reaching accuracy of ~96%.
 
 ## Weights of a single neuron in the first hidden layer
 <!-- https://media.giphy.com/media/fsu9Z8Wc9jX3qEZt5Z/giphy.gif -->
 ![](images/neuron.gif)
+
 The gif visualises the weights between the input layer and one of the neurons in the first hidden layer.
 
 ## Acknowledgements

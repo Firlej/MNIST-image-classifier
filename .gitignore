@@ -1,3 +1,6 @@
 data_train.js
 data_test.js
 data_min.js
+data_train.js.gz
+data_test.js.gz
+data_min.js.gz
