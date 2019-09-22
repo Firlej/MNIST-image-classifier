@@ -1,8 +1,6 @@
 function setup(callback) {
-    // resizeCanvas(windowWidth, windowHeight);
-    // resizeCanvas(min(windowWidth, windowHeight), min(windowWidth, windowHeight));
 
-    nn = new NeuralNetwork(784, [300, 100, 50], 10);
+    nn = new NeuralNetwork(784, [40, 40], 10);
 
     for (let i = 0; i < nn.layers[0].weights.data.length; i++) {
         let n_weights = nn.layers[0].weights.data[i];
@@ -14,6 +12,8 @@ function setup(callback) {
     windowResized();
 
     nn.prepare_draw();
+
+    setState(STATE.VISUALIZATION);
 
     background(rgb(0, 0, 0));
     callback();
@@ -56,6 +56,9 @@ function draw() {
     font("25px Arial");
     textAlign("right");
     text(digits_seen, width - 10, 30);
+
+    // DOWNLOAD CANVAS TO JPG
+    // document.getElementById('save_img').click();
 }
 
 function windowResized() {

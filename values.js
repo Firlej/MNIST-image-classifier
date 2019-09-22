@@ -200,3 +200,7 @@ Array.prototype.drawNeuron = function () {
         rect(x * a, y * b, a, b);
     }
 }
+
+function download_img(el) {
+    el.href = canvas.toDataURL("image/jpg");
+};

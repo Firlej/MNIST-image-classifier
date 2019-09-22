@@ -13,6 +13,13 @@ canvas {
     transform: translate(-50%, 0);
 }
 
+a,
+a:link,
+a:visited {
+    color: black;
+    text-decoration: none;
+}
+
 #bar {
     position: absolute;
     left: 0;

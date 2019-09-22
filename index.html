@@ -8,21 +8,11 @@
 
 	<link rel="shortcut icon" href="#">
 
-	<!-- JQUERY -->
-
-	<!-- <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css"> -->
-	<script language="javascript" src="libraries/jquery-3.4.1.js"></script>
-	<!-- <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> -->
-
 	<!-- MY CSS -->
 	<link rel="stylesheet" href="style.css">
 
 	<script language="javascript" src="libraries/oskar.js"></script>
 	<script language="javascript" src="libraries/nn.js"></script>
-
-	<!-- https://github.com/cazala/mnist -->
-	<!-- <script language="javascript" src="mnist_handwritten_train.js"></script> -->
-	<!-- <script language="javascript" src="mnist_handwritten_test.js"></script> -->
 
 	<!-- ACTIVATE ONE OF THOSE -->
 	<script language="javascript" src="data_train.js"></script>
@@ -39,14 +29,16 @@
 		<div id="wrapper">
 			<button onclick="setState(STATE.VISUALIZATION)">VISUALIZATION</button>
 			<button onclick="setState(STATE.PICTURE)">PICTURE</button>
-			<button onclick="setState(STATE.RANDOM_WRONG); ">RANDOM_WRONG</button>
-			<button onclick="setState(STATE.RANDOM); ">RANDOM</button>
-			<button onclick="setState(STATE.TEST); ">TEST</button>
-			<button onclick="setState(STATE.NEURON); ">NEURON</button>
+			<button onclick="setState(STATE.RANDOM_WRONG)">RANDOM_WRONG</button>
+			<button onclick="setState(STATE.RANDOM)">RANDOM</button>
+			<button onclick="setState(STATE.TEST)">TEST</button>
+			<button onclick="setState(STATE.NEURON)">NEURON</button>
+			<button><a id="save_img" download="img.jpg" href="" onclick="download_img(this);">DOWNLOAD CANVAS</a></button>
 		</div>
 	</div>
 
 	<canvas id="canvas" width="0" height="0"></canvas>
+
 	<script language="javascript" src="values.js"></script>
 	<script language="javascript" src="sketch.js"></script>
 
